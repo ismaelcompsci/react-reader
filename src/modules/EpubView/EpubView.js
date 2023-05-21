@@ -24,11 +24,14 @@ class EpubView extends Component {
   }
 
   initBook() {
-    const { url, tocChanged, epubInitOptions } = this.props
+    const { url, tocChanged, epubInitOptions, getBook } = this.props
     if (this.book) {
       this.book.destroy()
     }
     this.book = new Epub(url, epubInitOptions)
+
+    getBook && getBook(this.book)
+    
     this.book.loaded.navigation.then(({ toc }) => {
       this.setState(
         {
